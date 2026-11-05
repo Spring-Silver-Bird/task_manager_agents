@@ -17,7 +17,7 @@ Features:
 
 ## Stack
 
-- **Python** 3.14
+- **Python** 3.12+
 - **Django** 6.1 — ORM, template engine, forms, authentication and authorization
 - **PostgreSQL** — in production
 - **SQLite** — for local development
@@ -34,7 +34,7 @@ Features:
 ## Installation
 
 ### Requirements
-- Python 3.10 or higher
+- Python 3.12 or higher
 - uv (package manager)
 
 ### Cloning a repository
@@ -46,10 +46,9 @@ git clone https://github.com/Spring-Silver-Bird/python-django-development-projec
 cd python-project-52
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source $HOME/.local/bin/env
+cp .env.example .env
+# заполните .env: SECRET_KEY, DATABASE_URL и при необходимости DJANGO_SUPERUSER_*
 make setup
-npm install
-cp .env.example .env 2>/dev/null || echo "SECRET_KEY=$(uv run python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')\nDEBUG=True\nDATABASE_URL=sqlite:///db.sqlite3" > .env
-uv run python manage.py tailwind build
-uv run python manage.py migrate
-uv run python manage.py createsuperuser
-make dev
+make tailwind-build
+make superuser
+uv run python manage.py runserver

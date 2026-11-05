@@ -1,4 +1,4 @@
-.PHONY: setup install migrate collectstatic build render-start tailwind-build tests
+.PHONY: setup install migrate collectstatic build render-start tailwind-build superuser lint tests
 
 setup:
 	make install
@@ -21,6 +21,9 @@ render-start:
 
 tailwind-build:
 	uv run python manage.py tailwind build
+
+superuser:
+	uv run python manage.py createsuperuser --noinput
 
 lint:
 	uv run ruff check .

@@ -15,9 +15,12 @@ from pathlib import Path
 
 import dj_database_url
 import sentry_sdk
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / ".env")
 
 
 # Quick-start development settings - unsuitable for production
@@ -29,7 +32,18 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-1a+e2v2(=0n#y@nt%wprg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["webserver", ".onrender.com", "127.0.0.1", "0.0.0.0", "localhost", "testserver"]
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.environ.get(
+        "ALLOWED_HOSTS",
+        "webserver,.onrender.com,127.0.0.1,0.0.0.0,localhost,testserver",
+    ).split(",")
+    if host.strip()
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip() for origin in os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",") if origin.strip()
+]
 
 sentry_sdk.init(
     os.environ.get("SENTRY_DSN", ""),
