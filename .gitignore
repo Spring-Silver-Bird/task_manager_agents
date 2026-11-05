@@ -1,0 +1,17 @@
+.env
+__pycache__/
+*.pyc
+db.sqlite3
+node_modules/
+staticfiles/
+.venv/
+.idea/
+.django_tailwind_cli/
+assets/css/tailwind.css
+*.Zone.Identifier
+tmp_*.py
+.pytest_cache/
+.mypy_cache/
+htmlcov/
+coverage.xml
+.coverage

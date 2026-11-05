@@ -1,0 +1,56 @@
+<!-- task_manager/templates/labels/create.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Список меток{% endblock %}
+
+{% block content %}
+<div class="px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Метки</h1>
+    <a href="{% url 'labels:create' %}" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded">Создать метку</a>
+    <div class="overflow-x-auto">
+        <table class="min-w-full text-left text-sm border-collapse">
+            <thead class="table-dark">
+                <tr class="border-b border-gray-200 font-semibold text-gray-900">
+                    <th class="py-3 px-4">ID</th>
+                    <th class="py-3 px-4">Имя</th>
+                    <th class="py-3 px-4">Дата создания</th>
+                    <th class="py-3 px-4">Действия</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                {% for label in labels %}
+                <tr class="odd:bg-white even:bg-gray-50 hover:bg-gray-100">
+                    <td class="py-3 px-4">{{ label.id }}</td>
+                    <td class="py-3 px-4">{{ label.name|default:"—" }}</td>
+                    <td class="py-3 px-4">{{ label.created_at }}</td>
+                    <td>
+                        <a href="{% url 'labels:update' label.pk %}"
+                           class="block text-blue-600 hover:underline">
+                            Изменить
+                        </a>
+                        <a href="{% url 'labels:delete' label.pk %}"
+                           class="block text-blue-600 hover:underline">
+                            Удалить
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted py-4">
+                        Метки не найдены
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block picture %}
+    <div class="hero-image flex justify-end mt-auto pt-12">
+        <img src="{% static 'images/labels_list.png' %}" alt="Стикер" width="300" class="w-60 h-auto">
+    </div>
+{% endblock %}

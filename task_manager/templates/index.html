@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block title %}Менеджер задач{% endblock %}
+
+
+{% block content %}
+        <div class="bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
+          <h1 class="text-3xl font-normal text-gray-900 mb-2">Привет от Хекслета!</h1>
+          <p class="text-gray-600 mb-6">Тут мы создаем менеджер задач. Надеюсь вам будет интересно!</p>
+
+          <hr class="border-t border-gray-200 mb-6">
+
+        </div>
+{% endblock %}
+
+{% block picture %}
+    <div class="hero-image flex justify-center items-center mt-auto pt-12">
+        <img src="{% static 'images/index.png' %}" alt="Witch" width="600" class="max-w-xl w-full h-auto">
+    </div>
+{% endblock %}
+
+<footer class="container mx-auto px-4 max-w-5xl border-t border-gray-200 py-4 text-sm text-gray-600">
+    {% block footer %}
+    In ancient times cats were worshipped as gods; they have not forgotten this.
+    @Terry Pratchett
+    {% endblock %}
+</footer>
+
+

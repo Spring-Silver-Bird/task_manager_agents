@@ -1,0 +1,27 @@
+<!-- task_manager/templates/statuses/update.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Изменить статус{% endblock %}
+
+{% block content %}
+    <div class="max-w-lg mx-auto bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
+        <h2 class="text-3xl font-bold mb-6">Изменить статус {{ object.name }}"</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3"><label for="id_name" class="block text-sm font-medium mb-1">Имя</label>{{ form.name }}</div>
+
+        <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow">Изменить</button>
+        <a href="{% url 'statuses:list' %}" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-md border inline-block text-center ml-2">Отмена</a>
+    </form>
+</div>
+{% endblock %}
+
+{% block picture %}
+    <div class="hero-image bg-white flex justify-end mt-auto pt-12">
+        <img src="{% static 'images/status_update.png' %}" alt="Стикер" width="240" class="w-60 h-auto">
+    </div>
+{% endblock %}

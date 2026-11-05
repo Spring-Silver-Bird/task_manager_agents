@@ -1,0 +1,22 @@
+<!-- task_manager/templates/labels/delete.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-6 py-6">
+    <h1 class="text-3xl font-bold mb-6">Удалить <strong>{{ object.name }}</strong>?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <p>Вы уверены?</p>
+        <button type="submit" class="px-4 py-2 bg-red-50 hover:bg-red-60 text-red font-medium rounded-md shadow">Да, удалить</button>
+        <a href="{% url 'labels:list' %}" class="px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition inline-block text-center">Отмена</a>
+    </form>
+</div>
+{% endblock %}
+
+{% block picture %}
+    <div class="hero-image flex justify-end mt-auto pt-12">
+        <img src="{% static 'images/labels_delete.png' %}" alt="Стикер" width="300" class="w-60 h-auto">
+    </div>
+{% endblock %}

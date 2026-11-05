@@ -1,0 +1,56 @@
+<!-- task_manager/templates/users/update.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Изменить пользователя" %}{% endblock %}
+
+{% block content %}
+    <div class="max-w-lg mx-auto bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
+        <h2 class="text-3xl font-bold mb-6">Изменить {{ object.username }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="id_first_name" class="block text-sm font-medium mb-1">Имя:</label>
+            {{ form.first_name }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_last_name" class="block text-sm font-medium mb-1">Фамилия:</label>
+            {{ form.last_name }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_username" class="block text-sm font-medium mb-1">Имя пользователя:</label>
+            {{ form.username }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_password1" class="block text-sm font-medium mb-1">Пароль:</label>
+            {{ form.password1 }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_password2" class="block text-sm font-medium mb-1">Подтверждение пароля:</label>
+            {{ form.password2 }}
+        </div>
+
+        <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow">Изменить</button>
+        <a href="{% url 'users:list' %}" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-md border inline-block text-center ml-2">Отмена</a>
+    </form>
+</div>
+{% endblock %}
+
+{% block picture %}
+    <div class="hero-image flex justify-end mt-8 bg-white p-4 rounded-lg ml-auto w-fit">
+        <img src="{% static 'images/user_update.png' %}" alt="Стикер" width="240" class="w-60 h-auto">
+    </div>
+{% endblock %}
+
+{% block footer %}
+    Wisdom comes from experience. Experience is often a result of lack of wisdom.
+    @Terry Pratchett
+{% endblock %}

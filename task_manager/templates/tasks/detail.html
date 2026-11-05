@@ -1,0 +1,42 @@
+<!-- task_manager/templates/tasks/detail.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Просмотр задачи{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-bold mb-6">Просмотр задачи</h1>
+<div class="border border-gray-200 rounded max-w-3xl">
+    <div class="bg-slate-600 text-white px-4 py-3 font-semibold">{{ task.name }}</div>
+    <div class="bg-gray-50 p-4">
+        <p class="text-sm mb-4">{{ task.description }}</p>
+        <hr class="border-gray-200 mb-4">
+        <div class="grid grid-cols-2 gap-y-2 text-sm">
+            <div class="font-medium">Автор</div><div>{% if task.author %}{{ task.author.get_full_name|default:task.author.username }}{% else %}—{% endif %}</div>
+            <div class="font-medium">Исполнитель</div><div>{% if task.executor %}{{ task.executor.get_full_name|default:task.executor.username }}{% else %}—{% endif %}</div>
+            <div class="font-medium">Статус</div><div>{{ task.status.name }}</div>
+            <div class="font-medium">Дата создания</div><div>{{ task.created_at|date:"d.m.Y H:i" }}</div>
+            <div class="font-medium">Метки:</div>
+
+        </div>
+        <div>{% if task.labels.all %}
+                <ul class="list-disc ml-5">
+                    {% for l in task.labels.all %}
+                        <li>{{ l.name }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}—{% endif %}
+        </div>
+        <div class="mt-4 space-x-3 text-sm">
+            <a href="{% url 'tasks:update' task.pk %}" class="text-blue-600 hover:underline">Изменить</a>
+            <a href="{% url 'tasks:delete' task.pk %}" class="text-blue-600 hover:underline">Удалить</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block picture %}
+    <div class="hero-image flex justify-end mt-auto pt-12">
+        <img src="{% static 'images/task_detail.png' %}" alt="Стикер" width="400" class="w-96 h-auto">
+    </div>
+{% endblock %}

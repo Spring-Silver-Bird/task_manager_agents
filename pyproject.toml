@@ -1,0 +1,42 @@
+[project]
+name = "hexlet-code"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "dj-database-url>=3.1.2",
+    "django>=6.1",
+    "django-tailwind-cli>=4.7.0",
+    "gunicorn>=26.1.0",
+    "psycopg[binary]>=3.3.3",
+    "whitenoise>=6.12.0",
+    "rollbar>=0.16.0",
+    "pytest>=9.0.2",
+    "pytest-django>=4.12.0",
+    "django-widget-tweaks>=1.5.1",
+    "django-filter>=26.1",
+    "sentry-sdk>=2.69.2",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.16.8",
+]
+
+[tool.coverage.run]
+source = ["task_manager"]
+omit = ["*/migrations/*", "*/tests/*"]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "task_manager.settings"
+pythonpath = ["."]

@@ -1,0 +1,31 @@
+<!-- task_manager/templates/labels/update.html -->
+
+{% extends 'base.html' %}
+{% load static widget_tweaks %}
+
+{% block title %}Изменить метку{% endblock %}
+
+{% block content %}
+    <div class="max-w-lg mx-auto bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
+        <h2 class="text-3xl font-bold mb-6">Изменить метку "{{ object.name }}"</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {% if form.non_field_errors %}<div class="mb-4 p-3 bg-red-50">{{ form.non_field_errors }}</div>{% endif %}
+        <div class="mb-4">
+            <label for="{{ form.name.id_for_label }}" class="block text-sm mb-1">Имя:</label>
+            {% if form.name.errors %}<p class="text-sm text-red-600 -mt-1 mb-1">{{ form.name.errors|striptags }}</p>{% endif %}
+            {% render_field form.name class="block w-full max-w-md px-2 py-1.5 border border-gray-400 rounded-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" %}
+        </div>
+
+        <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow">Изменить</button>
+        <a href="{% url 'labels:list' %}" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-md border inline-block text-center ml-2">Отмена</a>
+    </form>
+</div>
+{% endblock %}
+
+{% block picture %}
+    <div class="hero-image bg-white flex justify-end mt-auto pt-12">
+        <img src="{% static 'images/labels_update.png' %}" alt="Стикер" width="300" class="w-60 h-auto">
+    </div>
+{% endblock %}
