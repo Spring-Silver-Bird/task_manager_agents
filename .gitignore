@@ -5,6 +5,7 @@ __pycache__/
 *.pyc
 db.sqlite3
 node_modules/
+contract/.typespec/
 staticfiles/
 .venv/
 .idea/

@@ -1,0 +1,1093 @@
+openapi: 3.1.0
+info:
+  title: Task Manager Web UI
+  version: 1.0.0
+tags: []
+paths:
+  /:
+    get:
+      operationId: index
+      description: Главная страница.
+      parameters: []
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+      security:
+        - {}
+  /labels/:
+    get:
+      operationId: labelsList
+      description: Список меток.
+      parameters: []
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+  /labels/create/:
+    get:
+      operationId: labelCreatePage
+      description: Страница создания метки.
+      parameters: []
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+    post:
+      operationId: labelCreate
+      description: Создание метки.
+      parameters: []
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '403':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NameForm'
+  /labels/{id}/delete/:
+    get:
+      operationId: labelDeletePage
+      description: Страница удаления метки.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '404':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+    post:
+      operationId: labelDelete
+      description: Удаление метки. При использовании в задачах удаление отклоняется.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '403':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '404':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DeleteForm'
+  /labels/{id}/update/:
+    get:
+      operationId: labelUpdatePage
+      description: Страница изменения метки.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '404':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+    post:
+      operationId: labelUpdate
+      description: Изменение метки.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '403':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '404':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NameForm'
+  /login/:
+    get:
+      operationId: loginPage
+      description: Страница входа.
+      parameters: []
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+      security:
+        - {}
+    post:
+      operationId: login
+      description: Вход по username и password. При успехе ставит cookie sessionid.
+      parameters: []
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '403':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LoginForm'
+      security:
+        - {}
+  /logout/:
+    post:
+      operationId: logout
+      description: Выход. Требует POST и CSRF.
+      parameters: []
+      responses:
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '403':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DeleteForm'
+  /statuses/:
+    get:
+      operationId: statusesList
+      description: Список статусов.
+      parameters: []
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+  /statuses/create/:
+    get:
+      operationId: statusCreatePage
+      description: Страница создания статуса.
+      parameters: []
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+    post:
+      operationId: statusCreate
+      description: Создание статуса.
+      parameters: []
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '403':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NameForm'
+  /statuses/{id}/delete/:
+    get:
+      operationId: statusDeletePage
+      description: Страница удаления статуса.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '404':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+    post:
+      operationId: statusDelete
+      description: Удаление статуса. При использовании в задачах удаление отклоняется.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '403':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '404':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DeleteForm'
+  /statuses/{id}/update/:
+    get:
+      operationId: statusUpdatePage
+      description: Страница изменения статуса.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '404':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+    post:
+      operationId: statusUpdate
+      description: Изменение статуса.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '403':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '404':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NameForm'
+  /tasks/:
+    get:
+      operationId: tasksList
+      description: Список задач с фильтрами status, executor, labels и self_tasks.
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          explode: false
+        - name: executor
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          explode: false
+        - name: labels
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          explode: false
+        - name: self_tasks
+          in: query
+          required: false
+          schema:
+            type: boolean
+          explode: false
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+  /tasks/create/:
+    get:
+      operationId: taskCreatePage
+      description: Страница создания задачи.
+      parameters: []
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+    post:
+      operationId: taskCreate
+      description: Создание задачи. Автор устанавливается автоматически.
+      parameters: []
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '403':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TaskForm'
+  /tasks/{id}/:
+    get:
+      operationId: taskDetail
+      description: Детальная страница задачи.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '404':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+  /tasks/{id}/delete/:
+    get:
+      operationId: taskDeletePage
+      description: Страница удаления задачи. Только автор.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '404':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+    post:
+      operationId: taskDelete
+      description: Удаление задачи. Только автор.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '403':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '404':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DeleteForm'
+  /tasks/{id}/update/:
+    get:
+      operationId: taskUpdatePage
+      description: Страница изменения задачи. Только автор.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '404':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+    post:
+      operationId: taskUpdate
+      description: Изменение задачи. Только автор.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '403':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '404':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TaskForm'
+  /users/:
+    get:
+      operationId: usersList
+      description: Список пользователей. Доступен только авторизованным.
+      parameters: []
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+  /users/create/:
+    get:
+      operationId: userCreatePage
+      description: Страница регистрации.
+      parameters: []
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+      security:
+        - {}
+    post:
+      operationId: userCreate
+      description: Регистрация пользователя.
+      parameters: []
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '403':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RegisterForm'
+      security:
+        - {}
+  /users/{id}/delete/:
+    get:
+      operationId: userDeletePage
+      description: Страница удаления профиля. Только сам пользователь.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '404':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+    post:
+      operationId: userDelete
+      description: Удаление профиля. Только сам пользователь. При наличии задач удаление отклоняется.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '403':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '404':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DeleteForm'
+  /users/{id}/update/:
+    get:
+      operationId: userUpdatePage
+      description: Страница изменения профиля. Только сам пользователь.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '404':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+    post:
+      operationId: userUpdate
+      description: Изменение профиля. Только сам пользователь.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '302':
+          description: Редирект после успешного действия или при отсутствии прав.
+          headers:
+            location:
+              required: true
+              schema:
+                type: string
+        '403':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+        '404':
+          description: HTML-страница приложения.
+          content:
+            text/html:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateUserForm'
+security:
+  - ApiKeyAuth: []
+components:
+  schemas:
+    DeleteForm:
+      type: object
+      required:
+        - csrfmiddlewaretoken
+      properties:
+        csrfmiddlewaretoken:
+          type: string
+      description: Форма подтверждения действия.
+    LoginForm:
+      type: object
+      required:
+        - username
+        - password
+        - csrfmiddlewaretoken
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        csrfmiddlewaretoken:
+          type: string
+      description: Форма входа.
+    NameForm:
+      type: object
+      required:
+        - name
+        - csrfmiddlewaretoken
+      properties:
+        name:
+          type: string
+        csrfmiddlewaretoken:
+          type: string
+      description: Форма статуса или метки.
+    RegisterForm:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - username
+        - password1
+        - password2
+        - csrfmiddlewaretoken
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        username:
+          type: string
+        password1:
+          type: string
+        password2:
+          type: string
+        csrfmiddlewaretoken:
+          type: string
+      description: Форма регистрации.
+    TaskForm:
+      type: object
+      required:
+        - name
+        - status
+        - csrfmiddlewaretoken
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: integer
+          format: int64
+        executor:
+          type: integer
+          format: int64
+        labels:
+          type: array
+          items:
+            type: integer
+            format: int64
+        csrfmiddlewaretoken:
+          type: string
+      description: Форма задачи. labels передаётся повторяющимся полем формы.
+    UpdateUserForm:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - username
+        - csrfmiddlewaretoken
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        username:
+          type: string
+        password1:
+          type: string
+        password2:
+          type: string
+        csrfmiddlewaretoken:
+          type: string
+      description: Форма изменения профиля.
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+servers:
+  - url: http://localhost:8000
+    description: Local development
+    variables: {}
