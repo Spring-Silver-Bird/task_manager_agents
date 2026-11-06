@@ -1,4 +1,4 @@
-.PHONY: setup install migrate collectstatic build render-start tailwind-build superuser lint tests
+.PHONY: setup install migrate collectstatic build render-start tailwind-build superuser lint tests contract-install contract-build contract-check
 
 setup:
 	make install
@@ -31,3 +31,12 @@ lint:
 
 tests:
 	uv run pytest --cov --cov-report=term --cov-fail-under=80
+
+contract-install:
+	npm --prefix contract ci
+
+contract-build:
+	npm --prefix contract run compile
+
+contract-check: contract-build
+	git diff --exit-code -- contract/tsp-output

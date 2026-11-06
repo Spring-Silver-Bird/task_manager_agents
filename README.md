@@ -52,3 +52,23 @@ make setup
 make tailwind-build
 make superuser
 uv run python manage.py runserver
+```
+
+---
+
+## API contract
+
+TypeSpec-контракт web UI и будущего JSON API `/api/v1` находится в [`contract/`](contract/README.md).
+
+Требуется Node.js >= 22.
+
+```bash
+make contract-install
+make contract-build
+make contract-check
+```
+
+Сгенерированные OpenAPI-файлы:
+
+- `contract/tsp-output/openapi/web.yaml`
+- `contract/tsp-output/openapi/api.yaml`

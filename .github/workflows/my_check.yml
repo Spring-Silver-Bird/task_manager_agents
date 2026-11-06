@@ -34,3 +34,24 @@ jobs:
 
       - name: Tests with coverage
         run: make tests
+
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: contract/package-lock.json
+
+      - name: Install contract deps
+        run: npm --prefix contract ci
+
+      - name: Build TypeSpec contract
+        run: npm --prefix contract run compile
+
+      - name: Check generated OpenAPI is committed
+        run: git diff --exit-code -- contract/tsp-output
