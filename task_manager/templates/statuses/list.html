@@ -15,6 +15,8 @@
                 <tr class="border-b border-gray-200 font-semibold text-gray-900">
                     <th class="py-3 px-4">ID</th>
                     <th class="py-3 px-4">Имя</th>
+                    <th class="py-3 px-4">Когда применять</th>
+                    <th class="py-3 px-4">Тип</th>
                     <th class="py-3 px-4">Дата создания</th>
                     <th class="py-3 px-4">Действия</th>
                 </tr>
@@ -24,6 +26,8 @@
                 <tr class="odd:bg-white even:bg-gray-50 hover:bg-gray-100">
                     <td class="py-3 px-4">{{ status.id }}</td>
                     <td class="py-3 px-4">{{ status.name|default:"—" }}</td>
+                    <td class="py-3 px-4">{{ status.when_to_apply|default:"—" }}</td>
+                    <td class="py-3 px-4">{{ status.get_status_type_display|default:"—" }}</td>
                     <td class="py-3 px-4">{{ status.created_at }}</td>
                     <td>
                         <a href="{% url 'statuses:update' status.pk %}"
@@ -38,7 +42,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4" class="text-center text-muted py-4">
+                    <td colspan="6" class="text-center text-muted py-4">
                         Статусы не найдены
                     </td>
                 </tr>

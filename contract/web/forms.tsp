@@ -1,3 +1,5 @@
+import "../shared/status.tsp";
+
 @doc("Форма входа.")
 model LoginForm {
   username: string;
@@ -25,7 +27,15 @@ model UpdateUserForm {
   csrfmiddlewaretoken: string;
 }
 
-@doc("Форма статуса или метки.")
+@doc("Форма статуса.")
+model StatusForm {
+  name: string;
+  when_to_apply?: string;
+  status_type: StatusType;
+  csrfmiddlewaretoken: string;
+}
+
+@doc("Форма метки.")
 model NameForm {
   name: string;
   csrfmiddlewaretoken: string;

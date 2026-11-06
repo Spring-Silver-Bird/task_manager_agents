@@ -14,6 +14,16 @@
       {% if form.name.errors %}<p class="text-sm text-red-600 -mt-1 mb-1">{{ form.name.errors|striptags }}</p>{% endif %}
       {% load widget_tweaks %}{% render_field form.name class="block w-full max-w-md px-2 py-1.5 border border-gray-400 rounded-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" %}
     </div>
+    <div class="mb-4">
+      <label for="{{ form.when_to_apply.id_for_label }}" class="block text-sm mb-1">Когда применять:</label>
+      {% if form.when_to_apply.errors %}<p class="text-sm text-red-600 -mt-1 mb-1">{{ form.when_to_apply.errors|striptags }}</p>{% endif %}
+      {% render_field form.when_to_apply class="block w-full max-w-md px-2 py-1.5 border border-gray-400 rounded-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" %}
+    </div>
+    <div class="mb-4">
+      <label for="{{ form.status_type.id_for_label }}" class="block text-sm mb-1">Тип:</label>
+      {% if form.status_type.errors %}<p class="text-sm text-red-600 -mt-1 mb-1">{{ form.status_type.errors|striptags }}</p>{% endif %}
+      {% render_field form.status_type class="block w-full max-w-md px-2 py-1.5 border border-gray-400 rounded-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" %}
+    </div>
     <button type="submit" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded">Создать</button>
   </form>
 </div>

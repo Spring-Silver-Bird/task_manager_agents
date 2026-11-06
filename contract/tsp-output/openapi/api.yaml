@@ -1020,6 +1020,8 @@ components:
       required:
         - id
         - name
+        - when_to_apply
+        - status_type
         - created_at
       properties:
         id:
@@ -1027,6 +1029,10 @@ components:
           format: int64
         name:
           type: string
+        when_to_apply:
+          type: string
+        status_type:
+          $ref: '#/components/schemas/StatusType'
         created_at:
           type: string
           format: date-time
@@ -1043,13 +1049,28 @@ components:
         name:
           type: string
       description: Краткие данные статуса.
+    StatusType:
+      type: string
+      enum:
+        - backlog
+        - todo
+        - in_progress
+        - review
+        - blocked
+        - done
+      description: Тип статуса задачи.
     StatusWrite:
       type: object
       required:
         - name
+        - status_type
       properties:
         name:
           type: string
+        when_to_apply:
+          type: string
+        status_type:
+          $ref: '#/components/schemas/StatusType'
       description: Создание или изменение статуса.
     TaskCreate:
       type: object

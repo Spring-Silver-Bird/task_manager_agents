@@ -3,7 +3,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from task_manager.labels.models import Label
-from task_manager.statuses.models import Status
+from task_manager.statuses.models import Status, StatusType
 from task_manager.tasks.models import Task
 
 User = get_user_model()
@@ -17,7 +17,11 @@ class AdminTest(TestCase):
             password="StrongPassw0rd!",
         )
         self.user = User.objects.create_user(username="regular", password="StrongPassw0rd!")
-        self.status = Status.objects.create(name="New")
+        self.status = Status.objects.create(
+            name="New",
+            when_to_apply="When work starts",
+            status_type=StatusType.IN_PROGRESS,
+        )
         self.label = Label.objects.create(name="Bug")
         self.task = Task.objects.create(name="Task", status=self.status, author=self.superuser)
         self.task.labels.add(self.label)
@@ -44,6 +48,12 @@ class AdminTest(TestCase):
             with self.subTest(url_name=url_name):
                 response = self.client.get(reverse(url_name))
                 self.assertEqual(response.status_code, 200)
+
+    def test_status_admin_shows_new_fields(self):
+        self.client.force_login(self.superuser)
+        response = self.client.get(reverse("admin:statuses_status_changelist"))
+        self.assertContains(response, "When work starts")
+        self.assertContains(response, "In Progress")
 
     def test_superuser_can_delete_task(self):
         self.client.force_login(self.superuser)

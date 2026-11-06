@@ -1,4 +1,5 @@
 import "@typespec/http";
+import "../shared/status.tsp";
 
 using TypeSpec.Http;
 
@@ -47,12 +48,16 @@ model StatusRef {
 model StatusRead {
   id: int64;
   name: string;
+  when_to_apply: string;
+  status_type: StatusType;
   created_at: utcDateTime;
 }
 
 @doc("Создание или изменение статуса.")
 model StatusWrite {
   name: string;
+  when_to_apply?: string;
+  status_type: StatusType;
 }
 
 @doc("Краткие данные метки.")

@@ -51,6 +51,11 @@ make contract-check
 - CSRF для web: поле формы `csrfmiddlewaretoken`.
 - CSRF для API: заголовок `X-CSRFToken`; токен и cookie `csrftoken` выдаёт `GET /api/v1/auth/csrf`.
 
+## Статусы
+
+- `when_to_apply` — необязательный текст: когда применять статус.
+- `status_type` — обязательный тип: `backlog`, `todo`, `in_progress`, `review`, `blocked`, `done`.
+
 ## Целевые правила доступа
 
 - Список и профили пользователей доступны только авторизованным.

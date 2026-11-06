@@ -364,7 +364,7 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/NameForm'
+              $ref: '#/components/schemas/StatusForm'
   /statuses/{id}/delete/:
     get:
       operationId: statusDeletePage
@@ -504,7 +504,7 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/NameForm'
+              $ref: '#/components/schemas/StatusForm'
   /tasks/:
     get:
       operationId: tasksList
@@ -1012,7 +1012,7 @@ components:
           type: string
         csrfmiddlewaretoken:
           type: string
-      description: Форма статуса или метки.
+      description: Форма метки.
     RegisterForm:
       type: object
       required:
@@ -1036,6 +1036,32 @@ components:
         csrfmiddlewaretoken:
           type: string
       description: Форма регистрации.
+    StatusForm:
+      type: object
+      required:
+        - name
+        - status_type
+        - csrfmiddlewaretoken
+      properties:
+        name:
+          type: string
+        when_to_apply:
+          type: string
+        status_type:
+          $ref: '#/components/schemas/StatusType'
+        csrfmiddlewaretoken:
+          type: string
+      description: Форма статуса.
+    StatusType:
+      type: string
+      enum:
+        - backlog
+        - todo
+        - in_progress
+        - review
+        - blocked
+        - done
+      description: Тип статуса задачи.
     TaskForm:
       type: object
       required:

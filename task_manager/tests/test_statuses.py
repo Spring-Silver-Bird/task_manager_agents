@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-from task_manager.statuses.models import Status
+from task_manager.statuses.models import Status, StatusType
 from task_manager.tasks.models import Task
 
 User = get_user_model()
@@ -13,7 +13,15 @@ User = get_user_model()
 class StatusTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="tester", password="pass123")
-        self.status = Status.objects.create(name="Test")
+        self.status = Status.objects.create(
+            name="Test",
+            when_to_apply="When testing",
+            status_type=StatusType.IN_PROGRESS,
+        )
+
+    def test_status_type_defaults_to_backlog(self):
+        status = Status.objects.create(name="Default")
+        self.assertEqual(status.status_type, StatusType.BACKLOG)
 
     def test_list_guest(self):
         response = self.client.get(reverse("statuses:list"))
@@ -57,11 +65,42 @@ class StatusTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
         self.assertIn("statuses", response.context)
+        self.assertContains(response, "Когда применять")
+        self.assertContains(response, "Тип")
+        self.assertContains(response, "When testing")
+        self.assertContains(response, "In Progress")
 
     def test_create_get(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("statuses:create"))
         self.assertEqual(response.status_code, 200)
+
+    def test_create(self):
+        self.client.force_login(self.user)
+        response = self.client.post(
+            reverse("statuses:create"),
+            {
+                "name": "Backlog",
+                "when_to_apply": "For new tasks",
+                "status_type": StatusType.BACKLOG,
+            },
+        )
+        self.assertRedirects(response, reverse("statuses:list"))
+        status = Status.objects.get(name="Backlog")
+        self.assertEqual(status.when_to_apply, "For new tasks")
+        self.assertEqual(status.status_type, StatusType.BACKLOG)
+
+    def test_create_without_when_to_apply(self):
+        self.client.force_login(self.user)
+        response = self.client.post(
+            reverse("statuses:create"),
+            {
+                "name": "Done",
+                "status_type": StatusType.DONE,
+            },
+        )
+        self.assertRedirects(response, reverse("statuses:list"))
+        self.assertEqual(Status.objects.get(name="Done").when_to_apply, "")
 
     def test_create_invalid(self):
         self.client.force_login(self.user)
@@ -69,6 +108,7 @@ class StatusTest(TestCase):
             reverse("statuses:create"),
             {
                 "name": "",
+                "status_type": StatusType.TODO,
             },
         )
         self.assertEqual(response.status_code, 200)
@@ -78,33 +118,56 @@ class StatusTest(TestCase):
         self.assertEqual(Status.objects.count(), 1)
         self.assertFalse(Status.objects.filter(name="").exists())
 
+    def test_create_requires_status_type(self):
+        self.client.force_login(self.user)
+        response = self.client.post(reverse("statuses:create"), {"name": "Review"})
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("status_type", response.context["form"].errors)
+        self.assertFalse(Status.objects.filter(name="Review").exists())
+
     def test_update_get_own(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("statuses:update", kwargs={"pk": self.status.pk}))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "statuses/update.html")
         self.assertContains(response, "Изменить")
+        self.assertContains(response, "Когда применять")
+        self.assertContains(response, "Тип")
 
     def test_update_post_own(self):
         self.client.force_login(self.user)
         response = self.client.post(
-            reverse("statuses:update", kwargs={"pk": self.status.pk}), {"name": "in progress"}, follow=False
+            reverse("statuses:update", kwargs={"pk": self.status.pk}),
+            {
+                "name": "in progress",
+                "when_to_apply": "When work starts",
+                "status_type": StatusType.DONE,
+            },
+            follow=False,
         )
         self.assertRedirects(response, reverse("statuses:list"))
         self.status.refresh_from_db()
         self.assertEqual(self.status.name, "in progress")
+        self.assertEqual(self.status.when_to_apply, "When work starts")
+        self.assertEqual(self.status.status_type, StatusType.DONE)
         list_resp = self.client.get(reverse("statuses:list"))
         self.assertContains(list_resp, "in progress")
+        self.assertContains(list_resp, "When work starts")
+        self.assertContains(list_resp, "Done")
 
     def test_update_other_allowed(self):
         other = User.objects.create_user(username="Lu-Tze", password="Sweeper1")
         self.client.force_login(other)
         response = self.client.get(reverse("statuses:update", kwargs={"pk": self.status.pk}))
         self.assertEqual(response.status_code, 200)
-        response = self.client.post(reverse("statuses:update", kwargs={"pk": self.status.pk}), {"name": "Hack"})
+        response = self.client.post(
+            reverse("statuses:update", kwargs={"pk": self.status.pk}),
+            {"name": "Hack", "status_type": StatusType.BLOCKED},
+        )
         self.assertRedirects(response, reverse("statuses:list"))
         self.status.refresh_from_db()
         self.assertEqual(self.status.name, "Hack")
+        self.assertEqual(self.status.status_type, StatusType.BLOCKED)
 
     def test_delete_get_own(self):
         self.client.force_login(self.user)
