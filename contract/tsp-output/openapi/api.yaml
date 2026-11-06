@@ -950,12 +950,18 @@ components:
       required:
         - id
         - name
+        - meaning
+        - karma_effect
         - created_at
       properties:
         id:
           type: integer
           format: int64
         name:
+          type: string
+        meaning:
+          type: string
+        karma_effect:
           type: string
         created_at:
           type: string
@@ -979,6 +985,10 @@ components:
         - name
       properties:
         name:
+          type: string
+        meaning:
+          type: string
+        karma_effect:
           type: string
       description: Создание или изменение метки.
     LoginRequest:

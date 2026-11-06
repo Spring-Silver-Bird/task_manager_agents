@@ -17,7 +17,7 @@ op labelCreatePage(): HtmlPage<200> | Redirect302;
 @route("/labels/create/")
 op labelCreate(
   @header contentType: "application/x-www-form-urlencoded",
-  @body form: NameForm,
+  @body form: LabelForm,
 ): Redirect302 | HtmlPage<200> | HtmlPage<403>;
 
 @doc("Страница изменения метки.")
@@ -34,7 +34,7 @@ op labelUpdatePage(@path id: int64):
 op labelUpdate(
   @path id: int64,
   @header contentType: "application/x-www-form-urlencoded",
-  @body form: NameForm,
+  @body form: LabelForm,
 ): Redirect302 | HtmlPage<200> | HtmlPage<403> | HtmlPage<404>;
 
 @doc("Страница удаления метки.")

@@ -70,12 +70,16 @@ model LabelRef {
 model LabelRead {
   id: int64;
   name: string;
+  meaning: string;
+  karma_effect: string;
   created_at: utcDateTime;
 }
 
 @doc("Создание или изменение метки.")
 model LabelWrite {
   name: string;
+  meaning?: string;
+  karma_effect?: string;
 }
 
 @doc("Задача.")

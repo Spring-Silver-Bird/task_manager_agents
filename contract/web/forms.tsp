@@ -36,8 +36,10 @@ model StatusForm {
 }
 
 @doc("Форма метки.")
-model NameForm {
+model LabelForm {
   name: string;
+  meaning?: string;
+  karma_effect?: string;
   csrfmiddlewaretoken: string;
 }
 

@@ -28,7 +28,7 @@ class LabelListView(LoginRequiredMixin, ListView):
 
 class LabelCreateView(LoginRequiredMixin, CreateView):
     model = Label
-    fields = ["name"]
+    fields = ["name", "meaning", "karma_effect"]
     template_name = "labels/create.html"
     success_url = reverse_lazy("labels:list")
 
@@ -39,7 +39,7 @@ class LabelCreateView(LoginRequiredMixin, CreateView):
 
 class LabelUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Label
-    fields = ["name"]
+    fields = ["name", "meaning", "karma_effect"]
     template_name = "labels/update.html"
     success_url = reverse_lazy("labels:list")
     success_message = "Метка успешно изменена"

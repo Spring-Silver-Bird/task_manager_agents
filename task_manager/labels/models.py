@@ -7,6 +7,15 @@ from django.utils.translation import gettext_lazy as _
 
 class Label(models.Model):
     name = models.CharField(max_length=150, unique=True, verbose_name=_("Имя"))
+    meaning = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name=_("Смысл"),
+    )
+    karma_effect = models.TextField(
+        blank=True,
+        verbose_name=_("Контекст/Эффект для кармы"),
+    )
     created_at = models.DateTimeField(
         verbose_name=_("дата создания"),
         auto_now_add=True,

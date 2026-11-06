@@ -14,6 +14,16 @@
       {% if form.name.errors %}<p class="text-sm text-red-600 -mt-1 mb-1">{{ form.name.errors|striptags }}</p>{% endif %}
       {% load widget_tweaks %}{% render_field form.name class="block w-full max-w-md px-2 py-1.5 border border-gray-400 rounded-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" %}
     </div>
+    <div class="mb-4">
+      <label for="{{ form.meaning.id_for_label }}" class="block text-sm mb-1">Смысл:</label>
+      {% if form.meaning.errors %}<p class="text-sm text-red-600 -mt-1 mb-1">{{ form.meaning.errors|striptags }}</p>{% endif %}
+      {% render_field form.meaning class="block w-full max-w-md px-2 py-1.5 border border-gray-400 rounded-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" %}
+    </div>
+    <div class="mb-4">
+      <label for="{{ form.karma_effect.id_for_label }}" class="block text-sm mb-1">Контекст/Эффект для кармы:</label>
+      {% if form.karma_effect.errors %}<p class="text-sm text-red-600 -mt-1 mb-1">{{ form.karma_effect.errors|striptags }}</p>{% endif %}
+      {% render_field form.karma_effect rows="3" class="block w-full max-w-md px-2 py-1.5 border border-gray-400 rounded-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" %}
+    </div>
     <button type="submit" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded">Создать</button>
   </form>
 </div>

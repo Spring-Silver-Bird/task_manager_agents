@@ -85,7 +85,7 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/NameForm'
+              $ref: '#/components/schemas/LabelForm'
   /labels/{id}/delete/:
     get:
       operationId: labelDeletePage
@@ -225,7 +225,7 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/NameForm'
+              $ref: '#/components/schemas/LabelForm'
   /login/:
     get:
       operationId: loginPage
@@ -988,6 +988,21 @@ components:
         csrfmiddlewaretoken:
           type: string
       description: Форма подтверждения действия.
+    LabelForm:
+      type: object
+      required:
+        - name
+        - csrfmiddlewaretoken
+      properties:
+        name:
+          type: string
+        meaning:
+          type: string
+        karma_effect:
+          type: string
+        csrfmiddlewaretoken:
+          type: string
+      description: Форма метки.
     LoginForm:
       type: object
       required:
@@ -1002,17 +1017,6 @@ components:
         csrfmiddlewaretoken:
           type: string
       description: Форма входа.
-    NameForm:
-      type: object
-      required:
-        - name
-        - csrfmiddlewaretoken
-      properties:
-        name:
-          type: string
-        csrfmiddlewaretoken:
-          type: string
-      description: Форма метки.
     RegisterForm:
       type: object
       required:

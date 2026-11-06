@@ -22,7 +22,11 @@ class AdminTest(TestCase):
             when_to_apply="When work starts",
             status_type=StatusType.IN_PROGRESS,
         )
-        self.label = Label.objects.create(name="Bug")
+        self.label = Label.objects.create(
+            name="Bug",
+            meaning="Broken behavior",
+            karma_effect="Negative karma",
+        )
         self.task = Task.objects.create(name="Task", status=self.status, author=self.superuser)
         self.task.labels.add(self.label)
 
@@ -54,6 +58,12 @@ class AdminTest(TestCase):
         response = self.client.get(reverse("admin:statuses_status_changelist"))
         self.assertContains(response, "When work starts")
         self.assertContains(response, "In Progress")
+
+    def test_label_admin_shows_new_fields(self):
+        self.client.force_login(self.superuser)
+        response = self.client.get(reverse("admin:labels_label_changelist"))
+        self.assertContains(response, "Broken behavior")
+        self.assertContains(response, "Negative karma")
 
     def test_superuser_can_delete_task(self):
         self.client.force_login(self.superuser)

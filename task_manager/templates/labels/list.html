@@ -15,6 +15,8 @@
                 <tr class="border-b border-gray-200 font-semibold text-gray-900">
                     <th class="py-3 px-4">ID</th>
                     <th class="py-3 px-4">Имя</th>
+                    <th class="py-3 px-4">Смысл</th>
+                    <th class="py-3 px-4">Контекст/Эффект для кармы</th>
                     <th class="py-3 px-4">Дата создания</th>
                     <th class="py-3 px-4">Действия</th>
                 </tr>
@@ -24,6 +26,8 @@
                 <tr class="odd:bg-white even:bg-gray-50 hover:bg-gray-100">
                     <td class="py-3 px-4">{{ label.id }}</td>
                     <td class="py-3 px-4">{{ label.name|default:"—" }}</td>
+                    <td class="py-3 px-4">{{ label.meaning|default:"—" }}</td>
+                    <td class="py-3 px-4">{{ label.karma_effect|default:"—" }}</td>
                     <td class="py-3 px-4">{{ label.created_at }}</td>
                     <td>
                         <a href="{% url 'labels:update' label.pk %}"
@@ -38,7 +42,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4" class="text-center text-muted py-4">
+                    <td colspan="6" class="text-center text-muted py-4">
                         Метки не найдены
                     </td>
                 </tr>
